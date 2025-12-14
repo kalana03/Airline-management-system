@@ -65,12 +65,12 @@ const data = {
   Assets: [
     {
       name: "Aircrafts",
-      url: "#",
+      url: "/dashboard/assets/Aircrafts",
       icon: Plane,
     },
     {
-      name: "Components",
-      url: "#",
+      name: "Inventory",
+      url: "/dashboard/assets/inventory",
       icon: Puzzle,
     },
 
