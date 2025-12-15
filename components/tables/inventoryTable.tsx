@@ -1,33 +1,107 @@
+"use client"
+
+import { Eye, Pencil } from "lucide-react"
+
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
-export function InventoryTable(){
-    return(
-        <Table>
-        
-        <TableHeader>
-            <TableRow>
-            <TableHead >Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-            <TableRow>
-            <TableCell className="font-medium">INV001</TableCell>
-            <TableCell>Paid</TableCell>
-            <TableCell>Credit Card</TableCell>
-            <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
-        </TableBody>
-        </Table>
-    )
+const inventoryItems = [
+  {
+    id: "INV-001",
+    name: "CFM56 Engine Filter",
+    category: "Engine",
+    stock: 24,
+    status: "In Stock",
+    location: "CMB Warehouse",
+    lastUpdated: "2025-01-12",
+  },
+  {
+    id: "INV-014",
+    name: "A320 Nose Wheel",
+    category: "Landing Gear",
+    stock: 2,
+    status: "Low Stock",
+    location: "CMB Hangar",
+    lastUpdated: "2025-01-10",
+  },
+  {
+    id: "INV-032",
+    name: "Cabin Oxygen Mask",
+    category: "Safety",
+    stock: 0,
+    status: "Out of Stock",
+    location: "—",
+    lastUpdated: "2025-01-08",
+  },
+]
+
+export function InventoryTable() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Item ID</TableHead>
+          <TableHead>Item Name</TableHead>
+          <TableHead>Category</TableHead>
+          <TableHead>Stock</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Location</TableHead>
+          <TableHead>Last Updated</TableHead>
+          <TableHead className="text-right">Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+
+      <TableBody>
+        {inventoryItems.map((item) => (
+          <TableRow key={item.id}>
+            <TableCell className="font-medium">
+              {item.id}
+            </TableCell>
+
+            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.category}</TableCell>
+            <TableCell>{item.stock}</TableCell>
+
+            <TableCell>
+              <Badge
+                variant={
+                  item.status === "In Stock"
+                    ? "default"
+                    : item.status === "Low Stock"
+                    ? "secondary"
+                    : "destructive"
+                }
+              >
+                {item.status}
+              </Badge>
+            </TableCell>
+
+            <TableCell>{item.location}</TableCell>
+            <TableCell>{item.lastUpdated}</TableCell>
+
+            {/* Actions */}
+            <TableCell className="text-right">
+              <div className="flex justify-end gap-1">
+                <Button variant="ghost" size="icon">
+                  <Eye className="h-4 w-4" />
+                </Button>
+
+                <Button variant="ghost" size="icon">
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
 }

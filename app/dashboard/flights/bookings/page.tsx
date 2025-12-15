@@ -13,7 +13,7 @@ export default function Page() {
     <SidebarProvider>
       <AppSidebar variant="inset" />
       <SidebarInset>
-        <SiteHeader title="Aircrafts"/>
+        <SiteHeader title="Bookings"/>
         <BookingsTable />
       </SidebarInset>
     </SidebarProvider>

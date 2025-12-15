@@ -79,17 +79,17 @@ const data = {
   Employees: [
     {
       name: "Pilots",
-      url: "#",
+      url: "/dashboard/employees/pilots",
       icon: Plane,
     },
     {
       name: "Cabin Crew",
-      url: "#",
+      url: "/dashboard/employees/cabincrew",
       icon: UsersRound,
     },
     {
       name: "Engineers",
-      url: "#",
+      url: "/dashboard/employees/engineers",
       icon: Wrench,
     },
   ],
@@ -97,17 +97,17 @@ const data = {
   Flights: [
     {
       name: "Schedules",
-      url: "#",
+      url: "/dashboard/flights/schedules",
       icon: PlaneTakeoff,
     },
     {
       name: "Bookings",
-      url: "#",
+      url: "/dashboard/flights/bookings",
       icon: TicketsPlane,
     },
     {
       name: "Passengers",
-      url: "#",
+      url: "/dashboard/flights/passengers",
       icon: UsersIcon,
     },
   ],
@@ -115,17 +115,17 @@ const data = {
   Transactions:[
     {
       name: "Fuel Records",
-      url: "#",
+      url: "/dashboard/transactions/fuel-records",
       icon: Fuel,
     },
     {
       name: "Catering",
-      url: "#",
+      url: "/dashboard/transactions/catering",
       icon: Utensils,
     },
     {
       name: "Maintainence Docs",
-      url: "#",
+      url: "/dashboard/transactions/maintainence-docs",
       icon: FileIcon,
     },
   ],
