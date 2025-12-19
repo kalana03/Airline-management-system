@@ -65,10 +65,10 @@ export function AircraftTable() {
               <Badge
                 variant={
                   aircraft.status === "Active"
-                    ? "default"
+                    ? "green"
                     : aircraft.status === "Maintenance"
                     ? "destructive"
-                    : "secondary"
+                    : "default"
                 }
               >
                 {aircraft.status}
@@ -80,19 +80,19 @@ export function AircraftTable() {
             <TableCell>{aircraft.departure}</TableCell>
 
             {/* Actions */}
-            <TableCell className="text-right">
+            <TableCell className="min-w-[300px] overflow-hidden max-w-[300px] text-right">
               <div className="flex justify-end gap-2">
-                <Button variant="destructive" size="sm" className="flex items-center gap-1">
+                <Button variant="green" size="sm" className="flex items-center gap-1">
                   <Wrench className="h-4 w-4" />
                   Maintenance
                 </Button>
 
-                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
                   <DollarSign className="h-4 w-4" />
                   Sell
                 </Button>
 
-                <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
                   <Pencil className="h-4 w-4" />
                   Edit
                 </Button>

@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Pencil } from "lucide-react"
+import { ArrowUpRight, UserPlus, Pencil } from "lucide-react"
 
 import {
   Table,
@@ -15,23 +15,26 @@ import { Button } from "@/components/ui/button"
 
 const cabinCrew = [
   {
-    id: "CC-201",
+    id: "CC-2011",
     name: "A. Jayasinghe",
-    role: "Purser",
+    position: "Purser",
+    qualifiedAircraft: "A320 / A330",
     base: "CMB",
-    status: "On Duty",
+    status: "Active",
   },
   {
-    id: "CC-224",
-    name: "R. Fernando",
-    role: "Senior Crew",
+    id: "CC-2045",
+    name: "M. Fernando",
+    position: "Senior FA",
+    qualifiedAircraft: "A320",
     base: "CMB",
-    status: "Off Duty",
+    status: "Standby",
   },
   {
-    id: "CC-256",
-    name: "M. Silva",
-    role: "Cabin Crew",
+    id: "CC-2099",
+    name: "N. Perera",
+    position: "Flight Attendant",
+    qualifiedAircraft: "A320 / A350",
     base: "DXB",
     status: "On Leave",
   },
@@ -44,7 +47,8 @@ export function CabinCrewTable() {
         <TableRow>
           <TableHead>Crew ID</TableHead>
           <TableHead>Name</TableHead>
-          <TableHead>Role</TableHead>
+          <TableHead>Position</TableHead>
+          <TableHead>Qualified Aircraft</TableHead>
           <TableHead>Base</TableHead>
           <TableHead>Status</TableHead>
           <TableHead className="text-right">Actions</TableHead>
@@ -54,36 +58,34 @@ export function CabinCrewTable() {
       <TableBody>
         {cabinCrew.map((crew) => (
           <TableRow key={crew.id}>
-            <TableCell className="font-medium">
-              {crew.id}
-            </TableCell>
-
+            <TableCell className="font-medium">{crew.id}</TableCell>
             <TableCell>{crew.name}</TableCell>
 
-            {/* Role Badge */}
+            {/* Position */}
             <TableCell>
               <Badge
                 variant={
-                  crew.role === "Purser"
+                  crew.position === "Purser"
                     ? "default"
-                    : crew.role === "Senior Crew"
+                    : crew.position === "Senior FA"
                     ? "secondary"
                     : "outline"
                 }
               >
-                {crew.role}
+                {crew.position}
               </Badge>
             </TableCell>
 
+            <TableCell>{crew.qualifiedAircraft}</TableCell>
             <TableCell>{crew.base}</TableCell>
 
-            {/* Status Badge */}
+            {/* Status */}
             <TableCell>
               <Badge
                 variant={
-                  crew.status === "On Duty"
+                  crew.status === "Active"
                     ? "default"
-                    : crew.status === "Off Duty"
+                    : crew.status === "Standby"
                     ? "secondary"
                     : "destructive"
                 }
@@ -93,13 +95,21 @@ export function CabinCrewTable() {
             </TableCell>
 
             {/* Actions */}
-            <TableCell className="text-right">
-              <div className="flex justify-end gap-1">
-                <Button variant="ghost" size="icon">
-                  <Eye className="h-4 w-4" />
+            <TableCell className="min-w-[150px] overflow-hidden max-w-[150px] text-right">
+              <div className="flex gap-2 justify-end">
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <UserPlus className="h-4 w-4" />
+                  Assign
                 </Button>
-                <Button variant="ghost" size="icon">
+
+                <Button variant="green" size="sm" className="flex items-center gap-1">
+                  <ArrowUpRight className="h-4 w-4" />
+                  Promote
+                </Button>
+
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
                   <Pencil className="h-4 w-4" />
+                  Edit
                 </Button>
               </div>
             </TableCell>

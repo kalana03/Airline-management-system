@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Pencil } from "lucide-react"
+import { Eye, Calendar, UserCheck } from "lucide-react"
 
 import {
   Table,
@@ -17,26 +17,32 @@ const pilots = [
   {
     id: "P-1023",
     name: "K. Perera",
+    license: "ATPL-SL-4521",
     rank: "Captain",
-    aircraft: "A320",
+    fleet: "A320 Family",
     base: "CMB",
     status: "On Duty",
+    nextFlight: "UL225",
   },
   {
     id: "P-1087",
     name: "S. Fernando",
+    license: "CPL-SL-3987",
     rank: "First Officer",
-    aircraft: "A330",
+    fleet: "A330",
     base: "CMB",
     status: "Off Duty",
+    nextFlight: "-",
   },
   {
     id: "P-1121",
     name: "N. Silva",
+    license: "TRN-SL-7742",
     rank: "Trainee",
-    aircraft: "A350",
+    fleet: "A350",
     base: "DXB",
     status: "On Leave",
+    nextFlight: "-",
   },
 ]
 
@@ -47,66 +53,78 @@ export function PilotTable() {
         <TableRow>
           <TableHead>Pilot ID</TableHead>
           <TableHead>Name</TableHead>
+          <TableHead>License No</TableHead>
           <TableHead>Rank</TableHead>
-          <TableHead>Aircraft Type</TableHead>
+          <TableHead>Fleet Rating</TableHead>
           <TableHead>Base</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead>Next Assignment</TableHead>
+          <TableHead className="text-right">Operations</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
         {pilots.map((pilot) => (
           <TableRow key={pilot.id}>
-  <TableCell className="font-medium">{pilot.id}</TableCell>
-  <TableCell>{pilot.name}</TableCell>
+            <TableCell className="font-medium">{pilot.id}</TableCell>
+            <TableCell>{pilot.name}</TableCell>
+            <TableCell className="font-mono text-sm">{pilot.license}</TableCell>
 
-  {/* Rank Badge */}
-  <TableCell>
-    <Badge
-      variant={
-        pilot.rank === "Captain"
-          ? "default"
-          : pilot.rank === "First Officer"
-          ? "secondary"
-          : "outline"
-      }
-    >
-      {pilot.rank}
-    </Badge>
-  </TableCell>
+            {/* Rank */}
+            <TableCell>
+              <Badge
+                variant={
+                  pilot.rank === "Captain"
+                    ? "default"
+                    : pilot.rank === "First Officer"
+                    ? "secondary"
+                    : "outline"
+                }
+              >
+                {pilot.rank}
+              </Badge>
+            </TableCell>
 
-  <TableCell>{pilot.aircraft}</TableCell>
-  <TableCell>{pilot.base}</TableCell>
+            <TableCell>{pilot.fleet}</TableCell>
+            <TableCell>{pilot.base}</TableCell>
 
-  {/* Status Badge */}
-  <TableCell>
-    <Badge
-      variant={
-        pilot.status === "On Duty"
-          ? "default"
-          : pilot.status === "Off Duty"
-          ? "secondary"
-          : "destructive"
-      }
-    >
-      {pilot.status}
-    </Badge>
-  </TableCell>
+            {/* Duty Status */}
+            <TableCell>
+              <Badge
+                variant={
+                  pilot.status === "On Duty"
+                    ? "default"
+                    : pilot.status === "Off Duty"
+                    ? "secondary"
+                    : "destructive"
+                }
+              >
+                {pilot.status}
+              </Badge>
+            </TableCell>
 
-  {/* Actions */}
-  <TableCell className="text-right">
-    <div className="flex justify-end gap-1">
-      <Button variant="ghost" size="icon">
-        <Eye className="h-4 w-4" />
-      </Button>
-      <Button variant="ghost" size="icon">
-        <Pencil className="h-4 w-4" />
-      </Button>
-    </div>
-  </TableCell>
-</TableRow>
+            <TableCell>{pilot.nextFlight}</TableCell>
 
+            {/* Operations Buttons */}
+            <TableCell className="max-w-[224px] text-right">
+              <div className="flex  justify-end gap-2">
+                <Button variant="ghost" size="sm">
+                  <Eye className="h-4 w-4 mr-1" />
+                  Profile
+                </Button>
+
+                <Button variant="outline" size="sm">
+                  <Calendar className="h-4 w-4 mr-1" />
+                  Schedule
+                </Button>
+
+                <Button variant="secondary" size="sm">
+                  <UserCheck className="h-4 w-4 mr-1" />
+                  Assign
+                </Button>
+              </div>
+            </TableCell>
+          </TableRow>
         ))}
       </TableBody>
     </Table>

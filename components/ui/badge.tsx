@@ -9,18 +9,21 @@ const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80",
+          "inline-flex items-center px-2 py-1 text-xs font-medium rounded-md border border-transparent shadow-sm bg-primary text-primary-foreground",
         secondary:
-          "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
+          "inline-flex items-center px-2 py-1 text-xs font-medium rounded-md border border-transparent bg-secondary text-secondary-foreground",
         destructive:
-          "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
-        outline: "text-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
+          "inline-flex items-center px-2 py-1 text-xs font-medium rounded-md border border-transparent shadow-sm bg-red-800 text-destructive-foreground",
+        outline:
+          "inline-flex items-center px-2 py-2 text-xs font-medium rounded-md border border-grey-500 text-foreground",
+        green:
+          "inline-flex items-center px-2 py-1 text-xs font-medium rounded-md border border-transparent shadow-sm bg-green-700 text-green-foreground",
+      }
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+                  }
 )
 
 export interface BadgeProps

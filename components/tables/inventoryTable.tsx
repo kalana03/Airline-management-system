@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Pencil } from "lucide-react"
+import { Eye, Pencil, PackagePlus, ArrowRightCircle } from "lucide-react"
 
 import {
   Table,
@@ -74,7 +74,7 @@ export function InventoryTable() {
               <Badge
                 variant={
                   item.status === "In Stock"
-                    ? "default"
+                    ? "green"
                     : item.status === "Low Stock"
                     ? "secondary"
                     : "destructive"
@@ -88,16 +88,27 @@ export function InventoryTable() {
             <TableCell>{item.lastUpdated}</TableCell>
 
             {/* Actions */}
-            <TableCell className="text-right">
-              <div className="flex justify-end gap-1">
-                <Button variant="ghost" size="icon">
+            <TableCell className=" text-right max-w-[180px] overflow-hidden max-w-[180px]">
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
                   <Eye className="h-4 w-4" />
+                  View
                 </Button>
 
-                <Button variant="ghost" size="icon">
-                  <Pencil className="h-4 w-4" />
+                
+
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <PackagePlus className="h-4 w-4" />
+                  Order
+                </Button>
+
+                <Button variant="default" size="sm" className="flex items-center gap-1">
+                  <ArrowRightCircle className="h-4 w-4" />
+                  Allocate
                 </Button>
               </div>
+
+
             </TableCell>
           </TableRow>
         ))}

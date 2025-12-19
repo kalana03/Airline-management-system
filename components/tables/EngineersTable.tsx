@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Pencil } from "lucide-react"
+import { Eye, Pencil, Wrench } from "lucide-react"
 
 import {
   Table,
@@ -98,15 +98,19 @@ export function EngineerTable() {
             </TableCell>
 
             {/* Actions */}
-            <TableCell className="text-right">
-              <div className="flex justify-end gap-1">
-                <Button variant="ghost" size="icon">
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button variant="ghost" size="icon">
-                  <Pencil className="h-4 w-4" />
-                </Button>
-              </div>
+            <TableCell className="min-w-[100px] overflow-hidden max-w-[100px] text-right">
+              <div className="flex justify-end gap-2">
+  <Button variant="ghost" size="sm" className="flex items-center gap-1">
+    <Eye className="h-4 w-4" />
+    View
+  </Button>
+
+  <Button variant="outline" size="sm" className="flex items-center gap-1">
+    <Wrench className="h-4 w-4" />
+    Assign Task
+  </Button>
+</div>
+
             </TableCell>
           </TableRow>
         ))}

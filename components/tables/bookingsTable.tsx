@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, Pencil } from "lucide-react"
+import { Eye, Trash } from "lucide-react"
 
 import {
   Table,
@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 const bookings = [
   {
     id: "BK001",
+    passengerId: "PAX001",
     passenger: "A. Perera",
     flight: "UL225",
     seat: "12A",
@@ -24,6 +25,7 @@ const bookings = [
   },
   {
     id: "BK002",
+    passengerId: "PAX002",
     passenger: "S. Fernando",
     flight: "UL406",
     seat: "8C",
@@ -32,6 +34,7 @@ const bookings = [
   },
   {
     id: "BK003",
+    passengerId: "PAX003",
     passenger: "N. Silva",
     flight: "UL308",
     seat: "2F",
@@ -46,6 +49,7 @@ export function BookingsTable() {
       <TableHeader>
         <TableRow>
           <TableHead>Booking ID</TableHead>
+          <TableHead>Passenger ID</TableHead>
           <TableHead>Passenger</TableHead>
           <TableHead>Flight</TableHead>
           <TableHead>Seat</TableHead>
@@ -58,20 +62,18 @@ export function BookingsTable() {
       <TableBody>
         {bookings.map((booking) => (
           <TableRow key={booking.id}>
-            <TableCell className="font-medium">
-              {booking.id}
-            </TableCell>
-
+            <TableCell className="font-medium">{booking.id}</TableCell>
+            <TableCell className="font-medium">{booking.passengerId}</TableCell>
             <TableCell>{booking.passenger}</TableCell>
             <TableCell>{booking.flight}</TableCell>
             <TableCell>{booking.seat}</TableCell>
 
             {/* Payment Status */}
-            <TableCell>
+            <TableCell className="min-w-[60px] overflow-hidden max-w-[60px]">
               <Badge
                 variant={
                   booking.status === "Paid"
-                    ? "default"
+                    ? "green"
                     : booking.status === "Pending"
                     ? "secondary"
                     : "destructive"
@@ -84,13 +86,15 @@ export function BookingsTable() {
             <TableCell>{booking.amount}</TableCell>
 
             {/* Actions */}
-            <TableCell className="text-right">
-              <div className="flex justify-end gap-1">
-                <Button variant="ghost" size="icon">
+            <TableCell className="min-w-[80px] overflow-hidden max-w-[80px]">
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
                   <Eye className="h-4 w-4" />
+                  View
                 </Button>
-                <Button variant="ghost" size="icon">
-                  <Pencil className="h-4 w-4" />
+                <Button variant="destructive" size="sm" className="flex items-center gap-1">
+                  <Trash className="h-4 w-4" />
+                  Cancel
                 </Button>
               </div>
             </TableCell>
