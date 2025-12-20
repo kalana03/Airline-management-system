@@ -82,7 +82,7 @@ export function SchedulesTable() {
     View
   </Button>
 
-  <Button variant="green" size="sm" className="flex items-center gap-1">
+  <Button variant="default" size="sm" className="flex items-center gap-1">
     <Wrench className="h-4 w-4" />
     Reschedule
   </Button>

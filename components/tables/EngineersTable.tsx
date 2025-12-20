@@ -66,17 +66,8 @@ export function EngineerTable() {
 
             {/* Specialty Badge */}
             <TableCell>
-              <Badge
-                variant={
-                  engineer.specialty === "Avionics"
-                    ? "default"
-                    : engineer.specialty === "Powerplant"
-                    ? "secondary"
-                    : "outline"
-                }
-              >
-                {engineer.specialty}
-              </Badge>
+              {engineer.specialty}
+              
             </TableCell>
 
             <TableCell>{engineer.aircraft}</TableCell>
@@ -89,8 +80,8 @@ export function EngineerTable() {
                   engineer.status === "On Duty"
                     ? "default"
                     : engineer.status === "On Call"
-                    ? "secondary"
-                    : "outline"
+                    ? "green"
+                    : "destructive"
                 }
               >
                 {engineer.status}
