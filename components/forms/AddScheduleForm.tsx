@@ -1,40 +1,41 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Plane, Upload, FileSpreadsheet, X, Check } from "lucide-react";
+import { PlaneTakeoff, Upload, FileSpreadsheet, X, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-interface AircraftFormData {
+interface ScheduleFormData {
+    flightNumber: string;
     aircraftId: string;
-    model: string;
-    manufacturer: string;
-    capacity: string;
+    origin: string;
+    destination: string;
+    departureDate: string;
+    departureTime: string;
+    arrivalDate: string;
+    arrivalTime: string;
     status: string;
-    yearManufactured: string;
-    layout: string;
-    currentLocation: string;
 }
 
-export function AddAircraftForm({
+export function AddScheduleForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-    const [formData, setFormData] = useState<AircraftFormData>({
+    const [formData, setFormData] = useState<ScheduleFormData>({
+        flightNumber: "",
         aircraftId: "",
-        model: "",
-        manufacturer: "",
-        capacity: "",
-        status: "active",
-        yearManufactured: "",
-        layout: "",
-        currentLocation: ""
+        origin: "",
+        destination: "",
+        departureDate: "",
+        departureTime: "",
+        arrivalDate: "",
+        arrivalTime: "",
+        status: "scheduled"
     });
 
     const [csvFile, setCsvFile] = useState<File | null>(null);
@@ -43,21 +44,20 @@ export function AddAircraftForm({
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        e: React.ChangeEvent<HTMLInputElement>
     ) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSelectChange = (value: string) => {
-        setFormData((prev) => ({ ...prev, status: value }));
+    const handleSelectChange = (name: string) => (value: string) => {
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log("Form submitted:", formData);
-        // Add your submission logic here
-        alert("Aircraft details submitted successfully!");
+        alert("Flight schedule added successfully!");
     };
 
     const handleDragOver = (e: React.DragEvent) => {
@@ -102,7 +102,6 @@ export function AddAircraftForm({
     const handleCsvUpload = () => {
         if (csvFile) {
             console.log("Uploading CSV:", csvFile.name);
-            // Add your CSV processing logic here
             setUploadSuccess(true);
             setTimeout(() => {
                 alert(`CSV file "${csvFile.name}" uploaded successfully!`);
@@ -124,12 +123,12 @@ export function AddAircraftForm({
                 <CardHeader className="space-y-1 pb-6">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-primary/10 rounded-lg">
-                            <Plane className="h-6 w-6 text-primary" />
+                            <PlaneTakeoff className="h-6 w-6 text-primary" />
                         </div>
                         <div>
-                            <CardTitle className="text-2xl font-bold">Add Aircraft</CardTitle>
+                            <CardTitle className="text-2xl font-bold">Add Flight Schedule</CardTitle>
                             <CardDescription className="text-base mt-1">
-                                Add individual aircraft details or upload multiple aircraft via CSV
+                                Add individual flight schedules or upload multiple schedules via CSV
                             </CardDescription>
                         </div>
                     </div>
@@ -138,7 +137,7 @@ export function AddAircraftForm({
                     <Tabs defaultValue="manual" className="w-full">
                         <TabsList className="grid w-full grid-cols-2 mb-6">
                             <TabsTrigger value="manual" className="gap-2">
-                                <Plane className="h-4 w-4" />
+                                <PlaneTakeoff className="h-4 w-4" />
                                 Manual Entry
                             </TabsTrigger>
                             <TabsTrigger value="csv" className="gap-2">
@@ -150,144 +149,149 @@ export function AddAircraftForm({
                         {/* Manual Entry Tab */}
                         <TabsContent value="manual" className="space-y-6">
                             <form onSubmit={handleSubmit} className="space-y-6">
-                                {/* Basic Information */}
                                 <div className="space-y-4">
+                                    <div className="grid md:grid-cols-2 gap-10">
+                                        <div className="space-y-2">
+                                            <Label htmlFor="flightNumber">
+                                                Flight Number <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="flightNumber"
+                                                name="flightNumber"
+                                                placeholder="e.g., EK001"
+                                                value={formData.flightNumber}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                    <div className="space-y-4">
-                                        <div className="grid md:grid-cols-2 gap-10">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="aircraftId">
-                                                    Aircraft ID <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="aircraftId"
-                                                    name="aircraftId"
-                                                    placeholder="e.g., AC-001"
-                                                    value={formData.aircraftId}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="aircraftId">
+                                                Aircraft ID <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="aircraftId"
+                                                name="aircraftId"
+                                                placeholder="e.g., AC-001"
+                                                value={formData.aircraftId}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            <div className="space-y-2">
-                                                <Label htmlFor="model">
-                                                    Aircraft Model <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="model"
-                                                    name="model"
-                                                    placeholder="e.g., Boeing 777-300ER"
-                                                    value={formData.model}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="origin">
+                                                Origin Airport <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="origin"
+                                                name="origin"
+                                                placeholder="e.g., DXB - Dubai International"
+                                                value={formData.origin}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            <div className="space-y-2">
-                                                <Label htmlFor="manufacturer">
-                                                    Manufacturer <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="manufacturer"
-                                                    name="manufacturer"
-                                                    placeholder="e.g., Boeing, Airbus"
-                                                    value={formData.manufacturer}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="destination">
+                                                Destination Airport <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="destination"
+                                                name="destination"
+                                                placeholder="e.g., JFK - New York JFK"
+                                                value={formData.destination}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            <div className="space-y-2">
-                                                <Label htmlFor="yearManufactured">
-                                                    Year Manufactured <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="yearManufactured"
-                                                    name="yearManufactured"
-                                                    type="number"
-                                                    placeholder="e.g., 2020"
-                                                    value={formData.yearManufactured}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    min="1900"
-                                                    max={new Date().getFullYear()}
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="departureDate">
+                                                Departure Date <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="departureDate"
+                                                name="departureDate"
+                                                type="date"
+                                                value={formData.departureDate}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            <div className="space-y-2">
-                                                <Label htmlFor="status">
-                                                    Status <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Select
-                                                    value={formData.status}
-                                                    onValueChange={handleSelectChange}
-                                                >
-                                                    <SelectTrigger className="transition-all focus:ring-2 focus:ring-primary/20">
-                                                        <SelectValue placeholder="Select status" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="active">Active</SelectItem>
-                                                        <SelectItem value="maintenance">Maintenance</SelectItem>
-                                                        <SelectItem value="retired">Retired</SelectItem>
-                                                        <SelectItem value="grounded">Grounded</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="departureTime">
+                                                Departure Time <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="departureTime"
+                                                name="departureTime"
+                                                type="time"
+                                                value={formData.departureTime}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            <div className="space-y-2">
-                                                <Label htmlFor="currentLocation">
-                                                    Current Location <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="currentLocation"
-                                                    name="currentLocation"
-                                                    type="text"
-                                                    placeholder="e.g., Dubai International Airport"
-                                                    value={formData.currentLocation}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="arrivalDate">
+                                                Arrival Date <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="arrivalDate"
+                                                name="arrivalDate"
+                                                type="date"
+                                                value={formData.arrivalDate}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
+                                        <div className="space-y-2">
+                                            <Label htmlFor="arrivalTime">
+                                                Arrival Time <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                id="arrivalTime"
+                                                name="arrivalTime"
+                                                type="time"
+                                                value={formData.arrivalTime}
+                                                onChange={handleInputChange}
+                                                required
+                                                className="transition-all focus:ring-2 focus:ring-primary/20"
+                                            />
+                                        </div>
 
-                                            {/* Capacity and Layout on same row */}
-
-                                            <div className="space-y-2">
-                                                <Label htmlFor="capacity">
-                                                    Passenger Capacity <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="capacity"
-                                                    name="capacity"
-                                                    type="number"
-                                                    placeholder="e.g., 354"
-                                                    value={formData.capacity}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <Label htmlFor="layout">
-                                                    Seating Layout <span className="text-red-500">*</span>
-                                                </Label>
-                                                <Input
-                                                    id="layout"
-                                                    name="layout"
-                                                    type="text"
-                                                    placeholder="e.g., 2-3-2 or 3-4-3"
-                                                    value={formData.layout}
-                                                    onChange={handleInputChange}
-                                                    required
-                                                    className="transition-all focus:ring-2 focus:ring-primary/20"
-                                                />
-                                            </div>
+                                        <div className="space-y-2">
+                                            <Label htmlFor="status">
+                                                Status <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Select
+                                                value={formData.status}
+                                                onValueChange={handleSelectChange("status")}
+                                            >
+                                                <SelectTrigger className="transition-all focus:ring-2 focus:ring-primary/20">
+                                                    <SelectValue placeholder="Select status" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="scheduled">Scheduled</SelectItem>
+                                                    <SelectItem value="boarding">Boarding</SelectItem>
+                                                    <SelectItem value="departed">Departed</SelectItem>
+                                                    <SelectItem value="in-flight">In Flight</SelectItem>
+                                                    <SelectItem value="landed">Landed</SelectItem>
+                                                    <SelectItem value="cancelled">Cancelled</SelectItem>
+                                                    <SelectItem value="delayed">Delayed</SelectItem>
+                                                </SelectContent>
+                                            </Select>
                                         </div>
                                     </div>
                                 </div>
@@ -299,14 +303,15 @@ export function AddAircraftForm({
                                         variant="outline"
                                         onClick={() => {
                                             setFormData({
+                                                flightNumber: "",
                                                 aircraftId: "",
-                                                model: "",
-                                                manufacturer: "",
-                                                capacity: "",
-                                                status: "active",
-                                                yearManufactured: "",
-                                                layout: "",
-                                                currentLocation: ""
+                                                origin: "",
+                                                destination: "",
+                                                departureDate: "",
+                                                departureTime: "",
+                                                arrivalDate: "",
+                                                arrivalTime: "",
+                                                status: "scheduled"
                                             });
                                         }}
                                     >
@@ -314,7 +319,7 @@ export function AddAircraftForm({
                                     </Button>
                                     <Button type="submit" className="gap-2">
                                         <Check className="h-4 w-4" />
-                                        Add Aircraft
+                                        Add Schedule
                                     </Button>
                                 </div>
                             </form>
@@ -323,7 +328,6 @@ export function AddAircraftForm({
                         {/* CSV Upload Tab */}
                         <TabsContent value="csv" className="space-y-6">
                             <div className="space-y-6">
-                                {/* CSV Format Instructions */}
                                 <div className="bg-muted/50 rounded-lg p-4 space-y-3">
                                     <h3 className="text-sm font-semibold flex items-center gap-2">
                                         <FileSpreadsheet className="h-4 w-4" />
@@ -333,14 +337,13 @@ export function AddAircraftForm({
                                         Your CSV file should include the following columns:
                                     </p>
                                     <div className="bg-background rounded border p-3 font-mono text-xs overflow-x-auto">
-                                        aircraftId,model,manufacturer,capacity,status,yearManufactured,layout,currentLocation
+                                        flightNumber,aircraftId,origin,destination,departureDate,departureTime,arrivalDate,arrivalTime,status
                                     </div>
                                     <p className="text-xs text-muted-foreground">
-                                        <strong>Example:</strong> AC-001,Boeing 777-300ER,Boeing,354,active,2020,3-4-3,Dubai International Airport
+                                        <strong>Example:</strong> EK001,AC-001,DXB - Dubai International,JFK - New York JFK,2025-01-15,14:30,2025-01-15,22:45,scheduled
                                     </p>
                                 </div>
 
-                                {/* Drag and Drop Area */}
                                 <div
                                     onDragOver={handleDragOver}
                                     onDragLeave={handleDragLeave}
@@ -361,9 +364,7 @@ export function AddAircraftForm({
                                                 </div>
                                                 <div className="space-y-2">
                                                     <p className="text-lg font-semibold">
-                                                        {isDragging
-                                                            ? "Drop your CSV file here"
-                                                            : "Drag and drop your CSV file"}
+                                                        {isDragging ? "Drop your CSV file here" : "Drag and drop your CSV file"}
                                                     </p>
                                                     <p className="text-sm text-muted-foreground">
                                                         or click to browse from your computer
@@ -433,23 +434,21 @@ export function AddAircraftForm({
                                     </div>
                                 </div>
 
-                                {/* Download Template */}
                                 <div className="flex justify-center">
                                     <Button
                                         type="button"
                                         variant="link"
                                         className="gap-2 text-sm"
                                         onClick={() => {
-                                            // Create a sample CSV template
-                                            const template = `aircraftId,model,manufacturer,capacity,status,yearManufactured,layout,currentLocation
-AC-001,Boeing 777-300ER,Boeing,354,active,2020,3-4-3,Dubai International Airport
-AC-002,Airbus A380-800,Airbus,489,active,2019,3-4-3,Abu Dhabi International Airport`;
+                                            const template = `flightNumber,aircraftId,origin,destination,departureDate,departureTime,arrivalDate,arrivalTime,status
+EK001,AC-001,DXB - Dubai International,JFK - New York JFK,2025-01-15,14:30,2025-01-15,22:45,scheduled
+EK002,AC-002,DXB - Dubai International,LHR - London Heathrow,2025-01-16,08:00,2025-01-16,12:30,scheduled`;
 
                                             const blob = new Blob([template], { type: "text/csv" });
                                             const url = window.URL.createObjectURL(blob);
                                             const a = document.createElement("a");
                                             a.href = url;
-                                            a.download = "aircraft_template.csv";
+                                            a.download = "schedules_template.csv";
                                             a.click();
                                             window.URL.revokeObjectURL(url);
                                         }}

@@ -18,7 +18,7 @@ import {
   SettingsIcon,
   UsersIcon,
   Plane,
-  Puzzle, 
+  Puzzle,
   UsersRound,
   Wrench,
   TicketsPlane,
@@ -50,18 +50,18 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboardIcon,
     },
     {
       title: "Analytics",
-      url: "#",
+      url: "/dashboard/analytics",
       icon: BarChartIcon,
     },
 
   ],
-  
-  
+
+
   Assets: [
     {
       name: "Aircrafts",
@@ -112,7 +112,7 @@ const data = {
     },
   ],
 
-  Transactions:[
+  Transactions: [
     {
       name: "Fuel Records",
       url: "/dashboard/transactions/fuel-records",
@@ -143,7 +143,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <ArrowUpCircleIcon className="h-5 w-5" />
-                <span className="text-base font-semibold">Emirates Inc.</span>
+                <span className="text-base font-semibold">Delta Airlines</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -151,12 +151,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.Assets} topic="Assets"/>
-        <NavDocuments items={data.Employees} topic="Employees"/>
-        <NavDocuments items={data.Flights} topic="Flights"/>
-        <NavDocuments items={data.Transactions} topic="Documents"/>
-        
-        
+        <NavDocuments items={data.Assets} topic="Assets" />
+        <NavDocuments items={data.Employees} topic="Employees" />
+        <NavDocuments items={data.Flights} topic="Flights" />
+        <NavDocuments items={data.Transactions} topic="Documents" />
+
+
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 const schedules = [
   {
     flight: "UL225",
-    aircraft: "A320-200",
+    aircraftID: "A320-200",
     origin: "🇱🇰 Sri Lanka ",
     destination: "🇦🇪 Dubai",
     departure: "2025-12-15 14:35",
@@ -18,7 +18,7 @@ const schedules = [
   },
   {
     flight: "UL406",
-    aircraft: "A350-900",
+    aircraftID: "A350-900",
     origin: "Dubai 🇦🇪",
     destination: "Colombo 🇱🇰",
     departure: "2025-12-15 22:10",
@@ -27,7 +27,7 @@ const schedules = [
   },
   {
     flight: "UL308",
-    aircraft: "A330-300",
+    aircraftID: "A330-300",
     origin: "Colombo 🇱🇰",
     destination: "Singapore 🇸🇬",
     departure: "2025-12-16 08:00",
@@ -40,10 +40,10 @@ export function SchedulesTable() {
   return (
     <Table>
       <TableHeader>
-        
+
         <TableRow>
           <TableHead>Flight</TableHead>
-          <TableHead>Aircraft</TableHead>
+          <TableHead>Aircraft ID</TableHead>
           <TableHead>Origin</TableHead>
           <TableHead>Destination</TableHead>
           <TableHead>Departure</TableHead>
@@ -57,7 +57,7 @@ export function SchedulesTable() {
         {schedules.map((s) => (
           <TableRow key={s.flight}>
             <TableCell className="font-medium">{s.flight}</TableCell>
-            <TableCell>{s.aircraft}</TableCell>
+            <TableCell>{s.aircraftID}</TableCell>
             <TableCell>{s.origin}</TableCell>
             <TableCell>{s.destination}</TableCell>
             <TableCell>{s.departure}</TableCell>
@@ -68,30 +68,30 @@ export function SchedulesTable() {
                   s.status === "On Time"
                     ? "green"
                     : s.status === "Delayed"
-                    ? "secondary"
-                    : "destructive"
+                      ? "secondary"
+                      : "destructive"
                 }
               >
                 {s.status}
               </Badge>
             </TableCell>
-            <TableCell className="min-w-[250px] overflow-hidden max-w-[25 0px] text-right">
-               <div className="flex justify-end gap-2">
-  <Button variant="ghost" size="sm" className="flex items-center gap-1">
-    <Eye className="h-4 w-4" />
-    View
-  </Button>
+            <TableCell className="min-w-[180px] overflow-hidden max-w-[180px] text-right">
+              <div className="flex justify-end gap-2">
+                <Button variant="ghost" size="sm" className="flex items-center gap-1">
+                  <Eye className="h-4 w-4" />
+                  View
+                </Button>
 
-  <Button variant="default" size="sm" className="flex items-center gap-1">
-    <Wrench className="h-4 w-4" />
-    Reschedule
-  </Button>
+                <Button variant="default" size="sm" className="flex items-center gap-1">
+                  <Wrench className="h-4 w-4" />
+                  Reschedule
+                </Button>
 
-  <Button variant="destructive" size="sm" className="flex items-center gap-1">
-    <Bell className="h-4 w-4" />
-    Cancel Flight
-  </Button>
-</div>
+                <Button variant="destructive" size="sm" className="flex items-center gap-1">
+                  <Bell className="h-4 w-4" />
+                  Cancel Flight
+                </Button>
+              </div>
 
             </TableCell>
           </TableRow>

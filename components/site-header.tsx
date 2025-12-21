@@ -9,25 +9,32 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
-type sectionHeaderProps={
-  title?:string;
-}
-import {Button} from './ui/button';
+import { AddAircraftForm } from './forms/AddAircraftForm'
+import { AddInventoryForm } from './forms/AddInventoryForm'
+import { AddPilotForm } from './forms/AddPilotForm'
+import { AddCabinCrewForm } from './forms/AddCabinCrewForm'
+import { AddEngineerForm } from './forms/AddEngineerForm'
+import { AddScheduleForm } from './forms/AddScheduleForm'
 
-function renderDrawerContent(title?:string) {
+type sectionHeaderProps = {
+  title?: string;
+}
+import { Button } from './ui/button';
+
+function renderDrawerContent(title?: string) {
   switch (title) {
     case "Aircrafts":
-      return <div>Aircraft Form Component</div>
+      return <AddAircraftForm />
     case "Inventory":
-      return <div>Inventory Form Component</div>
+      return <AddInventoryForm />
     case "Pilots":
-      return <div>Pilots Form Component</div>
+      return <AddPilotForm />
     case "Cabin Crew":
-      return <div>Staff Form Component</div>
+      return <AddCabinCrewForm />
     case "Engineers":
-      return <div>Staff Form Component</div>
+      return <AddEngineerForm />
     case "Schedules":
-      return <div>Schedules Form Component</div>
+      return <AddScheduleForm />
     // case "Fuel":
     //   return <div>Fuel Form Component</div>
     // case "Catering":
@@ -37,7 +44,7 @@ function renderDrawerContent(title?:string) {
   }
 }
 
-export function SiteHeader({ ...props }:sectionHeaderProps) {
+export function SiteHeader({ ...props }: sectionHeaderProps) {
 
   return (
     <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
@@ -51,25 +58,22 @@ export function SiteHeader({ ...props }:sectionHeaderProps) {
           <h1 className="text-base font-medium">{props.title || "Documents"}</h1>
         </div>
         <div className="flex gap-2">
-          {(props.title != "Bookings" && props.title !="Passengers") && (
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button>
-                <CirclePlus className="mr-2 h-4 w-4" />
-                Add New
-              </Button>
-            </DrawerTrigger>
+          {(props.title != "Bookings" && props.title != "Passengers") && (
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button>
+                  <CirclePlus className="mr-2 h-4 w-4" />
+                  Add New
+                </Button>
+              </DrawerTrigger>
 
-            <DrawerContent>
-              <DrawerHeader>
-                <DrawerTitle>Add New {props.title}</DrawerTitle>
-              </DrawerHeader>
+              <DrawerContent>
 
-              <div className="px-4 pb-6">
-                {renderDrawerContent(props.title)}
-              </div>
-            </DrawerContent>
-          </Drawer>)}
+                <div className="px-4 pb-6">
+                  {renderDrawerContent(props.title)}
+                </div>
+              </DrawerContent>
+            </Drawer>)}
           <Button size="default" variant="outline">
             <Download size="lg" /> Export to PDF
           </Button>
